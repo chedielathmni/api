@@ -1,16 +1,14 @@
 const {
-  create,
-  getUserByUserEmail,
+  getUserByPhoneNumber,
   getUserByUserId,
   getUsers,
-  updateUser,
-  deleteUser
+  create
 } = require("./user.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 
 module.exports = {
-  createUser: (req, res) => {
+    createUser: (req, res) => {
     const body = req.body;
     const salt = genSaltSync(10);
     body.password = hashSync(body.password, salt);
@@ -19,7 +17,7 @@ module.exports = {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          message: "Database connection errror"
+          message: err.message
         });
       }
       return res.status(200).json({
@@ -27,35 +25,38 @@ module.exports = {
         data: results
       });
     });
-  },
+  },  
   login: (req, res) => {
     const body = req.body;
-    getUserByUserEmail(body.email, (err, results) => {
+    getUserByPhoneNumber(body.phoneNumber, (err, results) => {
       if (err) {
         console.log(err);
       }
+      console.log("body => ", body)
       if (!results) {
         return res.json({
           success: 0,
-          data: "Invalid email or password"
+          data: "Invalid phone number or password"
         });
       }
       const result = compareSync(body.password, results.password);
+
       if (result) {
         results.password = undefined;
-        const jsontoken = sign({ result: results }, "qwe1234", {
-          expiresIn: "1h"
+        const jsontoken = sign({ phoneNumber: results.phoneNumber }, process.env.JWT_KEY, {
+          expiresIn: "1h",
         });
         return res.json({
           success: 1,
-          message: "login successfully",
+          message: "login successfully", 
           token: jsontoken
-        });
+        }, 200);
       } else {
+
         return res.json({
           success: 0,
-          data: "Invalid email or password"
-        });
+          data: "Invalid phone number or password"
+        }, 400);
       }
     });
   },
@@ -72,7 +73,7 @@ module.exports = {
           message: "Record not Found"
         });
       }
-      results.password = undefined;
+      results.password = undefined
       return res.json({
         success: 1,
         data: results
@@ -91,7 +92,7 @@ module.exports = {
       });
     });
   },
-  updateUsers: (req, res) => {
+  /* updateUsers: (req, res) => {
     const body = req.body;
     const salt = genSaltSync(10);
     body.password = hashSync(body.password, salt);
@@ -124,5 +125,5 @@ module.exports = {
         message: "user deleted successfully"
       });
     });
-  }
+  } */
 };
