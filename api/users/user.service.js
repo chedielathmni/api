@@ -6,10 +6,10 @@ module.exports = {
       `insert into transporter(first_name, last_name, password, phone_number) 
                 values(?,?,?,?)`,
       [
-        data.first_name,
-        data.last_name,
+        data.firstName,
+        data.lastName,
         data.password,
-        data.phone_number
+        data.phoneNumber
       ],
       (error, results, fields) => {
         if (error) {

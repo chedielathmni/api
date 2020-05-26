@@ -10,7 +10,7 @@ const {
 router.post("/login", login);
 router.get("/", checkToken, getUsers);
 router.get("/:id", checkToken, getUserByUserId);
-router.post("/", checkToken, createUser);
+router.post("/", createUser);
 //router.patch("/", checkToken, updateUsers);
 //router.delete("/", checkToken, deleteUser);
 

@@ -56,7 +56,7 @@ module.exports = {
         return res.json({
           success: 0,
           data: "Invalid phone number or password"
-        }, 400);
+        });
       }
     });
   },
