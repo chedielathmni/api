@@ -32,7 +32,6 @@ module.exports = {
       if (err) {
         console.log(err);
       }
-      console.log("body => ", body)
       if (!results) {
         return res.json({
           success: 0,
@@ -49,6 +48,7 @@ module.exports = {
         return res.json({
           success: 1,
           message: "login successfully", 
+          user: results,
           token: jsontoken
         }, 200);
       } else {
