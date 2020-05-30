@@ -2,7 +2,8 @@ const {
     getAll,
     getById,
     getByDriverId,
-    create
+    create,
+    getPageCount
 } = require("./purchase.service");
 
 module.exports = {
@@ -51,7 +52,10 @@ module.exports = {
 
     getPurchaseByDriverId: (req, res) => {
         const driverId = req.params.id;
-        getByDriverId(driverId, (err, results) => {
+        const resultsNumber = req.query.results
+        const page = req.query.page;
+
+        getByDriverId(driverId, resultsNumber, page, (err, results) => {
             if (err) return;
             if (!results) return res.json({
                 success: 0,
