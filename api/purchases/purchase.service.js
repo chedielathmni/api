@@ -42,7 +42,7 @@ module.exports = {
                 if (err) {
                     callback(err);
                 }
-                return callback(null, res[0]);
+                return callback(null, res);
             }
         );
     
