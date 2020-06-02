@@ -64,7 +64,18 @@ function getUsers(callBack) {
   );
 }
 
-module.exports = { create, getUserByPhoneNumber, getUserByUserId, getUsers };
+function updatePassword(driverId, password, callback) {
+  const query = `update transporter set password = '${password}' where id = ${driverId}`;
+
+  pool.query(query, [], (error, results) => {
+    if (error) {
+      callback(error);
+    }
+    return callback(null, results);
+  })
+}
+
+module.exports = { create, getUserByPhoneNumber, getUserByUserId, getUsers, updatePassword };
 
 // module.exports = {
 //   create: (data, callBack) => {

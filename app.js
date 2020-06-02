@@ -4,6 +4,8 @@ const app = express();
 
 const userRouter = require("./api/users/user.router");
 const purchaseRouter = require("./api/purchases/purchase.router");
+const carsRouter = require("./api/cars/cars.router");
+
 const cors = require('cors');
 app.use(cors());
 
@@ -11,6 +13,7 @@ app.use(express.json());
 
 app.use("/api/users", userRouter);
 app.use("/api/purchases", purchaseRouter);
+app.use("/api/cars", carsRouter)
 
 
 const port = process.env.APP_PORT || 4000;

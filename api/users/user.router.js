@@ -4,13 +4,15 @@ const {
   login,
   getUserByUserId,
   getUsers,
-  createUser
+  createUser,
+  updatePassword
 } = require("./user.controller");
 
 router.post("/login", login);
 router.get("/", checkToken, getUsers);
 router.get("/:id", checkToken, getUserByUserId);
 router.post("/", createUser);
+router.put("/:id", updatePassword)
 //router.patch("/", checkToken, updateUsers);
 //router.delete("/", checkToken, deleteUser);
 

@@ -69,6 +69,20 @@ module.exports = {
     
     },
 
+
+    getCount: (driverId, callback) => {
+        pool.query(
+            `select count(id) as count from gas_purchase where driver_id = ${driverId}`,
+            [],
+            (err, res) => {
+                if (err) {
+                    callback(err);
+                }
+                return callback(null, res[0]);
+            }
+        );
+    },
+
     getAll: callback => {
         pool.query(
             `select * from gas_purchase`,

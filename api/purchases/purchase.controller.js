@@ -3,7 +3,7 @@ const {
     getById,
     getByDriverId,
     create,
-    getPageCount
+    getCount
 } = require("./purchase.service");
 
 module.exports = {
@@ -66,6 +66,25 @@ module.exports = {
                 data: results
             })
         });
+    },
+
+
+    getPurchasesCount: (req, res) => {
+        const driverId = req.params.id;
+
+        getCount(driverId, (err, results) => {
+            if (err) return
+            if (!results) return res.json({
+                success: 0,
+                message: 'Records not Found'
+            });
+            return res.json({
+                success: 1,
+                data: results
+            })
+        })
+
+
     }
 
 }

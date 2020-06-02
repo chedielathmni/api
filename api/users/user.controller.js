@@ -2,15 +2,16 @@ const {
   getUserByPhoneNumber,
   getUserByUserId,
   getUsers,
-  create
+  create,
+  updatePassword
 } = require("./user.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+const salt = genSaltSync(10);
 
 module.exports = {
     createUser: (req, res) => {
     const body = req.body;
-    const salt = genSaltSync(10);
     body.password = hashSync(body.password, salt);
     create(body, (err, results) => {
       if (err) {
@@ -81,6 +82,7 @@ module.exports = {
     });
   },
   getUsers: (req, res) => {
+
     getUsers((err, results) => {
       if (err) {
         console.log(err);
@@ -92,6 +94,44 @@ module.exports = {
       });
     });
   },
+
+  updatePassword: (req, res) => {
+    const body = req.body;
+    const id = req.params.id;
+    getUserByUserId(id, (err, results) => {
+      if (err) {
+        console.log(err)
+        return;
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: 'User not found'
+        })
+      }
+      const result = compareSync(body.password, results.password);
+      if (!result) {
+        return res.json({
+          success: 0,
+          message: 'Wrong password'
+        })
+      }
+      if (result) {
+        body.newPassword = hashSync(body.newPassword, salt);
+        updatePassword(id, body.newPassword, (err, results) => {
+          if (err) {
+            console.log(err)
+            return
+          }
+          return res.json({
+            success: 1,
+            message: 'Password changed'
+          })
+        } )
+      }
+      
+    })
+  }
   /* updateUsers: (req, res) => {
     const body = req.body;
     const salt = genSaltSync(10);
