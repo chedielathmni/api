@@ -4,14 +4,15 @@ const pool = require("../../config/database");
 module.exports = {
     create: (data, callback) => {
         pool.query(
-            `insert into gas_purchase(car_id, purchase_date, price, gas_type, driver_id)
-                values(?,?,?,?,?)`,
+            `insert into gas_purchase(car_id, purchase_date, price, gas_type, driver_id, utility)
+                values(?,?,?,?,?,?)`,
             [
                 data.carId,
                 data.purchaseDate,
                 data.price,
                 data.gasType,
-                data.driverId
+                data.driverId,
+                data.utility
             ], (err, res) => {
                 if (err) {
                     callback(err);
