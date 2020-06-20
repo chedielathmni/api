@@ -4,6 +4,6 @@ const {
     getCar
 } = require("./cars.controller");
 
-router.get("/:id", getCar);
+router.get("/:id", checkToken, getCar);
 
 module.exports = router;
