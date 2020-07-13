@@ -3,15 +3,16 @@ const pool = require("../../config/database");
 // Create user
 function create(data, callBack) {
   // Insert user query
-  const query = `insert into transporter(first_name, last_name, password, phone_number) 
-  values(?,?,?,?)`;
+  const query = `insert into transporter(first_name, last_name, password, phone_number, valid) 
+  values(?,?,?,?,?)`;
 
   // Query values
   const values = [
     data.firstName,
     data.lastName,
     data.password,
-    data.phoneNumber
+    data.phoneNumber,
+    false
   ];
 
   pool.query(query, values, (error, results) => {

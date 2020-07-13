@@ -8,8 +8,8 @@ const {
     getPurchasesCount
 } = require("./purchase.controller");
 
-router.post("/", checkToken, createPurchase);
-router.get("/", checkToken, getAllPurchases);
-router.get("/:id", checkToken, getPurchaseByDriverId);
-router.get("/count/:id", checkToken, getPurchasesCount);
+router.post("/", createPurchase);
+router.get("/", getAllPurchases);
+router.get("/:id", getPurchaseByDriverId);
+router.get("/count/:id", getPurchasesCount);
 module.exports = router;

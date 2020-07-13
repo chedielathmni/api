@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const { checkToken } = require("../../auth/token_validation");
 const {
-    getCar
-} = require("./cars.controller");
+    sendAlert
+} = require("./alerts.controller");
 
-router.get("/:id", getCar);
+router.post("/", sendAlert);
 
 module.exports = router;
